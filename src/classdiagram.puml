@@ -1,0 +1,68 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class Main{
++static void main(String[]args)
+}
+
+class Streaming{
+-ArrayList<User> users
+-TextUI ui
+-FileIO io
+- User currentUser
+
+}
+
+interface Content {
++ String[] Genre
++ int minYear
++ int maxYear
++ int minRating
+}
+
+class Movies
+
+class Series
+
+package "util"{
+class FileIO{
+-Scanner scan
+-File file
++readUserData(String path)
++void saveUserData(String path, ArrayList<User> users)
++readContent(String path)
+
+}
+
+
+class TextUI{
+-Scanner scan
++ String  getInput(String msg)
++ void displayMessage(String msg)
+
+}
+
+}
+
+class User{
++ int userID
++ String username
++ String password
+
+}
+
+
+Main *-- Streaming
+Streaming *-- Content
+Content <|-- Series
+Content <|-- Movies
+
+Streaming *-- TextUI
+Streaming *-- FileIO
+
+Streaming *-- User
+
+
+
+
+@enduml
