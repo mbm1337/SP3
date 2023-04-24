@@ -83,12 +83,12 @@ public class Movies {
 
         public void genreSearch () {
 
-    }
-    public void watchedList(){
+        }
+        public void watchedList () {
+
+        }
+        public void savedList () {
+
+        }
 
     }
-    public void savedList(){
-
-    }
-
-}

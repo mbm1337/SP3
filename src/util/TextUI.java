@@ -5,10 +5,8 @@ import java.util.Scanner;
 
 public class TextUI {
     Scanner scan;
-    UserHandler userHandler;
 
-    public TextUI(UserHandler userHandler) {
-        this.userHandler = userHandler;
+    public TextUI() {
         this.scan = new Scanner(System.in);
     }
 

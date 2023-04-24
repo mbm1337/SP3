@@ -18,8 +18,8 @@ public class Streaming {
 
 
     public void streamSetup() {
-        UserHandler userhandler = null;
-
+        ui = new TextUI();
+        io = new FileIO();
         try {
             userhandler = new UserHandler("src/user.csv");
             userhandler.loadUsers();
@@ -28,8 +28,7 @@ public class Streaming {
             System.out.println("Desværre kan vi ikke køre programmet lige nu");
             System.exit(0);
         }
-        // ArrayList<String> users = io.readUserData("src/users");
-
+        ArrayList<String> users = io.readUserData("src/users");
         if (ui.getUserInput("Already user? Y/N").equalsIgnoreCase("Y")) {
             loginMenu(userhandler);
         } else {
@@ -51,25 +50,28 @@ public class Streaming {
         }
     }
 
-    public void loginMenu() {
-        String userName = ui.getUserInput("Please enter your username:");
-        String password = ui.getUserInput("Please enter your password:");
-        if (userHandler.login(userName, password)) {
-            ui.displayMessage("Welcome " + userName);
-        } else {
-            ui.displayMessage("Sorry, the username or password is incorrect");
-        }
+
+    public void loginMenu(UserHandler userHandler) {
+
+            String userName = ui.getUserInput("Please enter your username:");
+            String password = ui.getUserInput("Please enter your password:");
+            if (userHandler.login(userName, password)) {
+                ui.displayMessage("Welcome " + userName);
+            } else {
+                ui.displayMessage("Sorry, the username or password is incorrect");
+            }
     }
 
-    public void createUserMenu() {
-        String userName = ui.getUserInput("Please enter your username:");
-        String password = ui.getUserInput("Please enter your password:");
-        if (userHandler.createUser(userName, password)) {
-            ui.displayMessage("Welcome " + userName);
-        } else {
-            ui.displayMessage("Sorry, the username or password can not be used");
-        }
-
-
+    public void createUserMenu (UserHandler userHandler) {
+            String userName = ui.getUserInput("Please enter a username:");
+            String password = ui.getUserInput("Please enter a password:");
+            if (userHandler.createUser(userName, password)) {
+                ui.displayMessage("Welcome " + userName);
+            } else {
+                ui.displayMessage("Sorry, the username or password can not be used");
+            }
     }
+
+    //userHandler.saveUsers();
+
 }

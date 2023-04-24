@@ -1,3 +1,6 @@
+import util.FileIO;
+import util.TextUI;
+
 public class Series{
     private String title;
     private String[] genre;
@@ -8,6 +11,8 @@ public class Series{
     private int minRating;
     private int seasons;
     private int episodes;
+    TextUI ui = new TextUI();
+    FileIO io = new FileIO();
 
     public Series(String title, int year, String[] genre, float rating, int seasons, int episodes){
         this.title = title;
@@ -39,7 +44,6 @@ public class Series{
         genre[17] = "Western";
         genre[18] = "Romance";
         genre[19] = "Sport";
-
 
     }
 
