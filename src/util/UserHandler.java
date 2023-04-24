@@ -49,16 +49,10 @@ public class UserHandler {
     }
 
     public void loadUsers(){
-        try {
-
-            while(scanner.hasNextLine()){
-                String input = scanner.nextLine();
-                String[] values = input.split(",");
-                users.add(new User(values[0], values[1]));
-            }
-        }
-        catch (IOException e){
-            System.out.println("The system is not working currently");
+        while(scanner.hasNextLine()){
+            String input = scanner.nextLine();
+            String[] values = input.split(",");
+            users.add(new User(values[0], values[1]));
         }
     }
 
