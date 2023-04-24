@@ -1,5 +1,6 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+!pragma layout smetana
 
 class Main{
 +static void main(String[]args)
@@ -13,16 +14,19 @@ class Streaming{
 
 }
 
-interface Content {
+class Movies{
 + String[] Genre
 + int minYear
 + int maxYear
 + int minRating
 }
 
-class Movies
-
-class Series
+class Series{
++ String[] Genre
++ int minYear
++ int maxYear
++ int minRating
+}
 
 package "util"{
 class FileIO{

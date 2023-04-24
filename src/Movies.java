@@ -1,3 +1,9 @@
+import util.FileIO;
+import util.TextUI;
+import util.UserHandler;
+
+import java.util.ArrayList;
+
 public class Movies {
     private String title;
     private String[] genre;
@@ -6,6 +12,8 @@ public class Movies {
     private int maxYear;
     private float rating;
     private int minRating;
+    TextUI ui = new TextUI();
+    FileIO io = new FileIO();
 
     public Movies() {
 

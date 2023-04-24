@@ -8,8 +8,9 @@ public class Streaming {
     private TextUI ui;
     private FileIO io;
     private User currentUser;
-    private UserHandler userHandler;
-    Movies movie = new Movies();
+    Movies movies = new Movies();
+    Series series = new Series();
+    UserHandler userhandler;
 
 
     public Streaming() {
@@ -48,6 +49,7 @@ public class Streaming {
             break;
             default:
         }
+
     }
 
 

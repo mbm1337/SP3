@@ -14,13 +14,7 @@ public class Series{
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
 
-    public Series(String title, int year, String[] genre, float rating, int seasons, int episodes){
-        this.title = title;
-        this.year = year;
-        this.genre = genre;
-        this.rating = rating;
-        this.seasons = seasons;
-        this.episodes = episodes;
+    public Series(){
 
         genre = new String[20];
 
@@ -44,6 +38,38 @@ public class Series{
         genre[17] = "Western";
         genre[18] = "Romance";
         genre[19] = "Sport";
+
+    }
+
+    public void seriesMenu(){
+        String inputSeries = ui.getUserInput("Please choose between following options;\n" + "1. Search for a specific series\n" + "2. Search for a genre and receive all series in this category\n" + "3. Review your list of watched series\n" + "4. Review your list of saved series");
+        switch (inputSeries) {
+            case "1":
+                seriesSearch();
+                break;
+            case "2":
+                genreSearch();
+                break;
+            case "3":
+                watchedList();
+                break;
+            case "4":
+                savedList();
+                break;
+            default:
+        }
+    }
+
+    public void seriesSearch(){
+
+    }
+    public void genreSearch(){
+
+    }
+    public void watchedList(){
+
+    }
+    public void savedList(){
 
     }
 
