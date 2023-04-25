@@ -60,13 +60,15 @@ public class UserHandler {
         return true;
     }
 
-    public void loadUsers(){
+    public ArrayList<User> loadUsers(){
         while(scanner.hasNextLine()){
             String input = scanner.nextLine();
             String[] values = input.split(",");
             users.add(new User(values[0], values[1]));
         }
+        return users;
     }
+
 
     public void saveUsers() {
         try{

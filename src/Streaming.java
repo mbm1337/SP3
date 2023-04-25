@@ -6,6 +6,8 @@ import Util.User;
 
 import Util.*;
 
+import java.util.ArrayList;
+
 
 public class Streaming {
 
@@ -15,6 +17,8 @@ public class Streaming {
     Movies movies = new Movies();
     Series series = new Series();
     UserHandler userHandler;
+
+    ArrayList <User> users = new ArrayList<>();
 
 
     public Streaming() {
@@ -26,7 +30,7 @@ public class Streaming {
         io = new FileIO();
         try {
             userHandler = new UserHandler("src/Files/user.csv");
-            userHandler.loadUsers();
+            users = userHandler.loadUsers();
         } catch (Exception e) {
             System.out.println("The program cannot run at the moment");
             System.exit(0);
@@ -47,11 +51,11 @@ public class Streaming {
         String input = ui.getUserInput("Please choose between; 1/2/3 \n" + "1. Movies\n" + "2. Series\n" + "3. Quit");
         switch (input){
             case "1":
-                movies.movieMenu();
+                movies.movieMenu(currentUser);
                 mainMenu();
             break;
             case "2":
-                series.seriesMenu();
+                series.seriesMenu(currentUser);
                 mainMenu();
             break;
             case "3":
@@ -86,6 +90,7 @@ public class Streaming {
             } else {
                 ui.displayMessage("Sorry, the username or password can not be used");
             }
+        currentUser = new User(userName,password);
     }
 
 

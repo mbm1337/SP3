@@ -2,6 +2,8 @@ package Content;
 
 import Util.FileIO;
 import Util.TextUI;
+import Util.User;
+
 import java.util.ArrayList;
 
 public class Movies {
@@ -15,6 +17,7 @@ public class Movies {
     private float rating;
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
+    User currentUser;
 
 
     public Movies() {
@@ -42,8 +45,9 @@ public class Movies {
         genre[19] = "Music";
     }
 
-    public void movieMenu() {
-        String inputMovies = ui.getUserInput("Please choose between following options;\n" + "1. Search for a specific movie\n" + "2. Search for a genre and receive all movies in this category\n" + "3. Review your list of watched movies\n" + "4. Review your list of saved movies");
+    public void movieMenu(User user) {
+        currentUser = user;
+        String inputMovies = ui.getUserInput("Please choose between following options;\n" + "1. Search for a specific movie\n" + "2. Search for a genre and receive all movies in this category\n" + "3. Review your list of watched movies and series\n" + "4. Review your list of saved movies and series");
         switch (inputMovies) {
             case "1":
                 movieSearch();
@@ -52,14 +56,14 @@ public class Movies {
                 genreSearch();
                 break;
             case "3":
-                watchedMovieList();
+                currentUser.watchedList();
                 break;
             case "4":
-                savedMovieList();
+                currentUser.savedList();
                 break;
             default:
                 ui.displayMessage("This is not an option");
-                movieMenu();
+                movieMenu(currentUser);
         }
     }
 
@@ -78,11 +82,11 @@ public class Movies {
                 String input2 = ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen movie\n" + "2. Save movie to your saved list");
                 if (input2.equalsIgnoreCase("1")) {
                     ui.displayMessage("You are now watching " + title);
-                    watchedList.add(title);
+                    currentUser.watchedList.add(title);
                     ui.displayMessage("\nThank you for watching. Do you want to watch more?");
 
                 } else if (input2.equalsIgnoreCase("2")) {
-                    savedList.add(title);
+                    currentUser.savedList.add(title);
                     ui.displayMessage("The movie was saved on your saved list.");
 
 
@@ -114,22 +118,6 @@ public class Movies {
         movieSearch();
     }
 
-    public void watchedMovieList() {
-        for (String s : watchedList) {
-            ui.displayMessage(s);
-        }
-    }
 
-    public void savedMovieList() {
-        for (String s : savedList) {
-            ui.displayMessage(s);
-        }
-    }
-    public ArrayList<String> getWatchedList() {
-        return watchedList;
-    }
 
-    public ArrayList<String> getSavedList() {
-        return savedList;
-    }
 }

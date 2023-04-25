@@ -58,37 +58,27 @@ public class  FileIO {
         return arr;
 
     }
-    public void saveWatchedList(String path, User user, Movies movies, Series series) {
+    public void saveWatchedList(String path, User u, Movies movies, Series series) {
         FileWriter writer = null;
         try {
             writer = new FileWriter(path);
-
-            writer.write("username; watchedMovieList; watchedSeriesList; \n");
-
-            writer.write(user.getName() + ";" + movies.getWatchedList().toString() + ";" + series.getWatchedList().toString() + "\n");
-
-
+            writer.write("username; watchedList; \n");
+            writer.write(u.getName() + ";" + u.getWatchedList().toString() + ";" + "\n");
             writer.close();
 
 
         } catch (IOException e) {
 
-
         }
-
     }
 
-    public void saveSavedList(String path, User user, Movies movies, Series series) {
+    public void saveSavedList(String path, User u, Movies movies, Series series) {
         FileWriter writer = null;
         try {
             writer = new FileWriter(path);
-
-            writer.write("username; savedMovieList; savedSeriesList; \n");
-            writer.write(user.getName() + ";" + movies.getSavedList().toString() + ";" +series.getSavedList().toString()+ "\n");
-
-
+            writer.write("username; savedList; \n");
+            writer.write(u.getName() + ";" + u.getSavedList().toString() + ";" + "\n");
             writer.close();
-
 
         } catch (IOException e) {
 

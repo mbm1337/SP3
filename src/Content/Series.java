@@ -2,6 +2,7 @@ package Content;
 
 import Util.FileIO;
 import Util.TextUI;
+import Util.User;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,8 @@ public class Series{
 
 
     ArrayList<String> watchedList = new ArrayList<>();
+
+    User currentUser;
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
 
@@ -46,8 +49,9 @@ public class Series{
 
     }
 
-    public void seriesMenu(){
-        String inputSeries = ui.getUserInput("Please choose between following options;\n" + "1. Search for a specific series\n" + "2. Search for a genre and receive all series in this category\n" + "3. Review your list of watched series\n" + "4. Review your list of saved series");
+    public void seriesMenu(User user){
+        currentUser = user;
+        String inputSeries = ui.getUserInput("Please choose between following options;\n" + "1. Search for a specific series\n" + "2. Search for a genre and receive all series in this category\n" + "3. Review your list of watched movies and series\n" + "4. Review your list of saved movies and series");
         switch (inputSeries) {
             case "1":
                 seriesSearch();
@@ -56,14 +60,14 @@ public class Series{
                 genreSearch();
                 break;
             case "3":
-                watchedSeriesList();
+                currentUser.watchedList();
                 break;
             case "4":
-                savedSeriesList();
+                currentUser.savedList();
                 break;
             default:
                 ui.displayMessage("This is not an option");
-                seriesMenu();
+                seriesMenu(currentUser);
         }
     }
 
@@ -81,11 +85,11 @@ public class Series{
                 String s2 = ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen series\n" + "2. Save series to your saved list");
                 if (s2.equalsIgnoreCase("1")) {
                     ui.displayMessage("You are now watching " + title);
-                    watchedList.add(input);
+                    currentUser.watchedList.add(title);
                     ui.displayMessage("\nThank you for watching. Do you want to watch more?");
 
                 } else if(s2.equalsIgnoreCase("2")) {
-                    savedList.add(input);
+                    currentUser.savedList.add(title);
                     System.out.println("The series was saved on your watch list");
                 }else {
                     ui.displayMessage("This is not an option");
@@ -113,24 +117,6 @@ public class Series{
         }
         seriesSearch();
     }
-    public void watchedSeriesList() {
-        for (String s : watchedList) {
-            ui.displayMessage(s);
-        }
-    }
 
-    public void savedSeriesList() {
-        for (String s : savedList) {
-            ui.displayMessage(s);
-        }
-    }
-
-    public ArrayList<String> getSavedList() {
-        return savedList;
-    }
-
-    public ArrayList<String> getWatchedList() {
-        return watchedList;
-    }
 
 }
