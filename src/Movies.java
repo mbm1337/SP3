@@ -1,17 +1,14 @@
-import util.FileIO;
-import util.TextUI;
-import util.UserHandler;
-
+import Util.FileIO;
+import Util.TextUI;
 import java.util.ArrayList;
 
 public class Movies {
     private String title;
     private String[] genre;
+
+    ArrayList<String> watchedList = new ArrayList<>();
     private int year;
-    private int minYear;
-    private int maxYear;
     private float rating;
-    private int minRating;
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
 
@@ -41,7 +38,7 @@ public class Movies {
     }
 
     public void movieMenu() {
-        String inputMovies = ui.getUserInput("Please choose between following options;\n" + "1. Search for a specific movie\n" + "2. Search for a genre and recieve all movies in this category\n" + "3. Review your list of watched movies\n" + "4. Review your list of saved movies");
+        String inputMovies = ui.getUserInput("Please choose between following options;\n" + "1. Search for a specific movie\n" + "2. Search for a genre and receive all movies in this category\n" + "3. Review your list of watched movies\n" + "4. Review your list of saved movies");
         switch (inputMovies) {
             case "1":
                 movieSearch();
@@ -56,47 +53,70 @@ public class Movies {
                 savedList();
                 break;
             default:
+                ui.displayMessage("This is not an option");
+                movieMenu();
         }
     }
 
+    public void movieSearch() {
 
-        public void movieSearch () {
+        String input = ui.getUserInput("Please type the desired movie:");
+        String[] moviesData = io.readMoviesData("src/Movies.csv", 100);
 
+        for (String s : moviesData) {
+            String[] line = s.split(";");
+            this.title = line[0].trim();
+            this.year = Integer.parseInt(line[1].trim());
+            this.genre = line[2].split("\\.");
+            this.rating = Float.parseFloat(line[3].trim());
+            if (input.equalsIgnoreCase(title)) {
+                String input2 = ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen movie\n" + "2. Save movie to your saved list");
+                if (input2.equalsIgnoreCase("1")) {
+                    ui.displayMessage("You are now watching " + title);
+                    watchedList.add(input);
 
-            String input = ui.getUserInput("Please type the desired movie:");
+                } else if (input2.equalsIgnoreCase("2")) {
+                    //todo: make saved list
+                    //savedList.add(input);
+                    ui.displayMessage("The movie was saved on your watch list");
 
-            String[] moviesData = io.readMoviesData("src/Movies.csv", 100);
-
-
-            for (String s : moviesData) {
-                String[] line = s.split(";");
-                this.title = line[0].trim();
-                this.year = Integer.parseInt(line[1].trim());
-                this.genre = line[2].split(".");
-                this.rating = Float.parseFloat(line[3].trim());
-                    if (input.equalsIgnoreCase(title)) {
-                        if (ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen movie\n" + "2. Save movie to your saved list").equalsIgnoreCase("1")) {
-                            ui.displayMessage("You are now watching " + input);
-                        } else {
-                            //savedList.add(input);
-                            System.out.println("The movie was saved on your watch list");
-
-                        }
-
-                    }
+                } else {
+                    ui.displayMessage("Please answer 1 or 2");
+                    movieSearch();
                 }
             }
-
-
-
-        public void genreSearch () {
-
         }
-        public void watchedList () {
+    }
 
-        }
-        public void savedList () {
+    public void genreSearch () {
+        String input = ui.getUserInput("Please type the desired genre:");
+        String[] moviesData = io.readMoviesData("src/Movies.csv", 100);
 
+        for (String s : moviesData) {
+            String[] line = s.split(";");
+            this.title = line[0].trim();
+            this.year = Integer.parseInt(line[1].trim());
+            this.genre = line[2].split("\\.");
+            this.rating = Float.parseFloat(line[3].trim());
+
+            for (String s2 : genre) {
+                if (input.equalsIgnoreCase(s2.trim())) {
+                    ui.displayMessage(title);
+                }
+            }
         }
+        movieSearch();
+    }
+
+    public void watchedList () {
+        for (String s :watchedList) {
+                ui.displayMessage(s);
+        }
+
 
     }
+    public void savedList () {
+
+    }
+
+}

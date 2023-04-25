@@ -1,10 +1,12 @@
-import util.FileIO;
-import util.TextUI;
+import Util.FileIO;
+import Util.TextUI;
+
+import java.util.Arrays;
 
 public class Series{
     private String title;
     private String[] genre;
-    private int year;
+    private String[] year;
     private int minYear;
     private int maxYear;
     private float rating;
@@ -61,10 +63,44 @@ public class Series{
     }
 
     public void seriesSearch(){
+        String input = ui.getUserInput("Please type the desired series:");
+        String[] seriesData = io.readMoviesData("src/Series.csv", 100);
 
+        for (String s : seriesData) {
+            String[] line = s.split(";");
+            this.title = line[0].trim();
+            this.year = line[1].split("-");
+            this.genre = line[2].split("\\.");
+            this.rating = Float.parseFloat(line[3].trim());
+            if (input.equalsIgnoreCase(title)) {
+                if (ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen series\n" + "2. Save series to your saved list").equalsIgnoreCase("1")) {
+                    ui.displayMessage("You are now watching " + title);
+                    //watchedList.add(input);
+                } else {
+                    //savedList.add(input);
+                    System.out.println("The series was saved on your watch list");
+                }
+            }
+        }
     }
     public void genreSearch(){
+        String input = ui.getUserInput("Please type the desired genre:");
+        String[] seriesData = io.readMoviesData("src/Series.csv", 100);
 
+        for (String s : seriesData) {
+            String[] line = s.split(";");
+            this.title = line[0].trim();
+            this.year = line[1].split("-");
+            this.genre = line[2].split("\\.");
+            this.rating = Float.parseFloat(line[3].trim());
+
+            for (String s2 : genre) {
+                if (input.equalsIgnoreCase(s2.trim())) {
+                    ui.displayMessage(title);
+                }
+            }
+        }
+        seriesSearch();
     }
     public void watchedList(){
 
