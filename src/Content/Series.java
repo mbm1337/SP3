@@ -1,18 +1,21 @@
+package Content;
+
 import Util.FileIO;
 import Util.TextUI;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Series{
     private String title;
     private String[] genre;
     private String[] year;
-    private int minYear;
-    private int maxYear;
     private float rating;
-    private int minRating;
     private int seasons;
     private int episodes;
+    ArrayList<String> savedList = new ArrayList<>();
+
+
+    ArrayList<String> watchedList = new ArrayList<>();
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
 
@@ -53,18 +56,20 @@ public class Series{
                 genreSearch();
                 break;
             case "3":
-                watchedList();
+                watchedSeriesList();
                 break;
             case "4":
-                savedList();
+                savedSeriesList();
                 break;
             default:
+                ui.displayMessage("This is not an option");
+                seriesMenu();
         }
     }
 
     public void seriesSearch(){
         String input = ui.getUserInput("Please type the desired series:");
-        String[] seriesData = io.readMoviesData("src/Series.csv", 100);
+        String[] seriesData = io.readMoviesData("src/Files/Series.csv", 100);
 
         for (String s : seriesData) {
             String[] line = s.split(";");
@@ -73,19 +78,25 @@ public class Series{
             this.genre = line[2].split("\\.");
             this.rating = Float.parseFloat(line[3].trim());
             if (input.equalsIgnoreCase(title)) {
-                if (ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen series\n" + "2. Save series to your saved list").equalsIgnoreCase("1")) {
+                String s2 = ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen series\n" + "2. Save series to your saved list");
+                if (s2.equalsIgnoreCase("1")) {
                     ui.displayMessage("You are now watching " + title);
-                    //watchedList.add(input);
-                } else {
-                    //savedList.add(input);
+                    watchedList.add(input);
+                    ui.displayMessage("\nThank you for watching. Do you want to watch more?");
+
+                } else if(s2.equalsIgnoreCase("2")) {
+                    savedList.add(input);
                     System.out.println("The series was saved on your watch list");
+                }else {
+                    ui.displayMessage("This is not an option");
+                    seriesSearch();
                 }
             }
         }
     }
     public void genreSearch(){
         String input = ui.getUserInput("Please type the desired genre:");
-        String[] seriesData = io.readMoviesData("src/Series.csv", 100);
+        String[] seriesData = io.readMoviesData("src/Files/Series.csv", 100);
 
         for (String s : seriesData) {
             String[] line = s.split(";");
@@ -102,13 +113,24 @@ public class Series{
         }
         seriesSearch();
     }
-    public void watchedList(){
-
+    public void watchedSeriesList() {
+        for (String s : watchedList) {
+            ui.displayMessage(s);
+        }
     }
-    public void savedList(){
 
+    public void savedSeriesList() {
+        for (String s : savedList) {
+            ui.displayMessage(s);
+        }
     }
 
+    public ArrayList<String> getSavedList() {
+        return savedList;
+    }
 
+    public ArrayList<String> getWatchedList() {
+        return watchedList;
+    }
 
 }

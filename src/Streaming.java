@@ -1,8 +1,9 @@
+import Content.Movies;
+import Content.Series;
 import Util.FileIO;
 import Util.TextUI;
 import Util.User;
 
-import java.util.ArrayList;
 import Util.*;
 
 
@@ -24,11 +25,10 @@ public class Streaming {
         ui = new TextUI();
         io = new FileIO();
         try {
-            userHandler = new UserHandler("src/user.csv");
+            userHandler = new UserHandler("src/Files/user.csv");
             userHandler.loadUsers();
         } catch (Exception e) {
-            // skriv til bruger og luk program
-            System.out.println("Desværre kan vi ikke køre programmet lige nu");
+            System.out.println("The program cannot run at the moment");
             System.exit(0);
         }
 
@@ -48,15 +48,15 @@ public class Streaming {
         switch (input){
             case "1":
                 movies.movieMenu();
-                ui.displayMessage("\n"+ "*************"+ "\nYour movie is over. Do you wanna watch more? ");
                 mainMenu();
             break;
             case "2":
                 series.seriesMenu();
-                ui.displayMessage("\n"+ "*************"+ "\nYour series is over. Do you wanna watch more? ");
                 mainMenu();
             break;
             case "3":
+                io.saveSavedList("src/Files/savedList.csv",currentUser,movies,series);
+                io.saveWatchedList("src/Files/watchedList.csv",currentUser,movies,series);
                 ui.displayMessage("Goodbye!");
                 break;
             default:
@@ -75,6 +75,7 @@ public class Streaming {
                 ui.displayMessage("Sorry, the username or password is incorrect");
                 streamSetup();
             }
+        currentUser = new User(userName,password);
     }
 
     public void createUserMenu (UserHandler userHandler) {
@@ -86,6 +87,8 @@ public class Streaming {
                 ui.displayMessage("Sorry, the username or password can not be used");
             }
     }
+
+
 
 
 

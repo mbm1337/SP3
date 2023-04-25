@@ -1,3 +1,5 @@
+package Content;
+
 import Util.FileIO;
 import Util.TextUI;
 import java.util.ArrayList;
@@ -7,10 +9,13 @@ public class Movies {
     private String[] genre;
 
     ArrayList<String> watchedList = new ArrayList<>();
+    ArrayList<String> savedList = new ArrayList<>();
+
     private int year;
     private float rating;
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
+
 
     public Movies() {
 
@@ -47,10 +52,10 @@ public class Movies {
                 genreSearch();
                 break;
             case "3":
-                watchedList();
+                watchedMovieList();
                 break;
             case "4":
-                savedList();
+                savedMovieList();
                 break;
             default:
                 ui.displayMessage("This is not an option");
@@ -61,7 +66,7 @@ public class Movies {
     public void movieSearch() {
 
         String input = ui.getUserInput("Please type the desired movie:");
-        String[] moviesData = io.readMoviesData("src/Movies.csv", 100);
+        String[] moviesData = io.readMoviesData("src/Files/Movies.csv", 100);
 
         for (String s : moviesData) {
             String[] line = s.split(";");
@@ -73,24 +78,25 @@ public class Movies {
                 String input2 = ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen movie\n" + "2. Save movie to your saved list");
                 if (input2.equalsIgnoreCase("1")) {
                     ui.displayMessage("You are now watching " + title);
-                    watchedList.add(input);
+                    watchedList.add(title);
+                    ui.displayMessage("\nThank you for watching. Do you want to watch more?");
 
                 } else if (input2.equalsIgnoreCase("2")) {
-                    //todo: make saved list
-                    //savedList.add(input);
-                    ui.displayMessage("The movie was saved on your watch list");
+                    savedList.add(title);
+                    ui.displayMessage("The movie was saved on your saved list.");
+
 
                 } else {
-                    ui.displayMessage("Please answer 1 or 2");
+                    ui.displayMessage("This is not an option");
                     movieSearch();
                 }
             }
         }
     }
 
-    public void genreSearch () {
+    public void genreSearch() {
         String input = ui.getUserInput("Please type the desired genre:");
-        String[] moviesData = io.readMoviesData("src/Movies.csv", 100);
+        String[] moviesData = io.readMoviesData("src/Files/Movies.csv", 100);
 
         for (String s : moviesData) {
             String[] line = s.split(";");
@@ -108,15 +114,22 @@ public class Movies {
         movieSearch();
     }
 
-    public void watchedList () {
-        for (String s :watchedList) {
-                ui.displayMessage(s);
+    public void watchedMovieList() {
+        for (String s : watchedList) {
+            ui.displayMessage(s);
         }
-
-
-    }
-    public void savedList () {
-
     }
 
+    public void savedMovieList() {
+        for (String s : savedList) {
+            ui.displayMessage(s);
+        }
+    }
+    public ArrayList<String> getWatchedList() {
+        return watchedList;
+    }
+
+    public ArrayList<String> getSavedList() {
+        return savedList;
+    }
 }

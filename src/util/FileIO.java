@@ -2,8 +2,11 @@ package Util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Content.*;
 
 
 public class  FileIO {
@@ -55,4 +58,43 @@ public class  FileIO {
         return arr;
 
     }
+    public void saveWatchedList(String path, User user, Movies movies, Series series) {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(path);
+
+            writer.write("username; watchedMovieList; watchedSeriesList; \n");
+
+            writer.write(user.getName() + ";" + movies.getWatchedList().toString() + ";" + series.getWatchedList().toString() + "\n");
+
+
+            writer.close();
+
+
+        } catch (IOException e) {
+
+
+        }
+
+    }
+
+    public void saveSavedList(String path, User user, Movies movies, Series series) {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(path);
+
+            writer.write("username; savedMovieList; savedSeriesList; \n");
+            writer.write(user.getName() + ";" + movies.getSavedList().toString() + ";" +series.getSavedList().toString()+ "\n");
+
+
+            writer.close();
+
+
+        } catch (IOException e) {
+
+
+        }
+
+    }
+
 }

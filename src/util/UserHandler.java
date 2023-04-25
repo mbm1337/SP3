@@ -35,7 +35,7 @@ public class UserHandler {
 
     }
     public boolean login(String username, String password) {
-        ArrayList<String> tmp = io.readUserData("src/user.csv");
+        ArrayList<String> tmp = io.readUserData("src/Files/user.csv");
         for (String s : tmp){
             String[] line = s.split(",");
             username = line[0].trim();
