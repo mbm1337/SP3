@@ -9,10 +9,6 @@ import java.util.ArrayList;
 public class Movies {
     private String title;
     private String[] genre;
-
-    ArrayList<String> watchedList = new ArrayList<>();
-    ArrayList<String> savedList = new ArrayList<>();
-
     private int year;
     private float rating;
     TextUI ui = new TextUI();
@@ -87,7 +83,9 @@ public class Movies {
             this.genre = line[2].split("\\.");
             this.rating = Float.parseFloat(line[3].trim());
             if (input.equalsIgnoreCase(title)) {
-                String input2 = ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen movie\n" + "2. Save movie to your saved list");
+                String input2 = ui.getUserInput("Choose between: 1/2\n" +
+                        "1. Watch the chosen movie\n" +
+                        "2. Save movie to your saved list");
                 if (input2.equalsIgnoreCase("1")) {
                     ui.displayMessage("You are now watching " + title);
                     currentUser.watchedList.add(title);
@@ -96,7 +94,6 @@ public class Movies {
                 } else if (input2.equalsIgnoreCase("2")) {
                     currentUser.savedList.add(title);
                     ui.displayMessage("The movie was saved on your saved list.");
-
 
                 } else {
                     ui.displayMessage("This is not an option");
@@ -151,11 +148,5 @@ public class Movies {
             ui.displayMessage("Sorry, we have no movies from this decade");
             searchByYear();
         }
-
-
-
     }
-
-
-
 }

@@ -4,8 +4,6 @@ import Util.FileIO;
 import Util.TextUI;
 import Util.User;
 
-import java.util.ArrayList;
-
 public class Series{
     private String title;
     private String[] genre;
@@ -13,10 +11,6 @@ public class Series{
     private float rating;
     private int seasons;
     private int episodes;
-    ArrayList<String> savedList = new ArrayList<>();
-
-
-    ArrayList<String> watchedList = new ArrayList<>();
 
     User currentUser;
     TextUI ui = new TextUI();
@@ -51,7 +45,11 @@ public class Series{
 
     public void seriesMenu(User user){
         currentUser = user;
-        String inputSeries = ui.getUserInput("Please choose between following options;\n" + "1. Search for a specific series\n" + "2. Search for a genre and receive all series in this category\n" + "3. Review your list of watched movies and series\n" + "4. Review your list of saved movies and series");
+        String inputSeries = ui.getUserInput("Please choose between following options;\n" +
+                "1. Search for a specific series\n" +
+                "2. Search for a genre and receive all series in this category\n" +
+                "3. Review your list of watched movies and series\n" +
+                "4. Review your list of saved movies and series");
         switch (inputSeries) {
             case "1":
                 seriesSearch();
@@ -82,7 +80,9 @@ public class Series{
             this.genre = line[2].split("\\.");
             this.rating = Float.parseFloat(line[3].trim());
             if (input.equalsIgnoreCase(title)) {
-                String s2 = ui.getUserInput("Choose between: 1/2\n" + "1. Watch the chosen series\n" + "2. Save series to your saved list");
+                String s2 = ui.getUserInput("Choose between: 1/2\n" +
+                        "1. Watch the chosen series\n" +
+                        "2. Save series to your saved list");
                 if (s2.equalsIgnoreCase("1")) {
                     ui.displayMessage("You are now watching " + title);
                     currentUser.watchedList.add(title);

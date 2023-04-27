@@ -38,27 +38,38 @@ public class UserHandler {
         ArrayList<String> tmp = io.readUserData("src/Files/user.csv");
         for (String s : tmp){
             String[] line = s.split(",");
-            username = line[0].trim();
-            password = line[1].trim();
-            User user = new User(username,password);
-            users.add(user);
+            String fileUsername = line[0].trim();
+            String filePassword = line[1].trim();
+            if(username.equalsIgnoreCase(fileUsername) && password.equals(filePassword)) {
+                User user = new User(username, password);
+                users.add(user);
+                return true;
+            }else{
+                return false;
+            }
         }
+        /*
 
         for(User user: users){
             if(user.getName().equals(username) && user.getPassword().equals(password) )
                 return true;
         }
         return false;
+
+         */
+        return false;
     }
 
     public boolean createUser(String username, String password) {
-        for(User user: users){
-            if(user.getName().equals(username))
+        for (User user : users) {
+            if (user.getName().equals(username)) {
                 return false;
+            }
         }
         users.add(new User(username, password));
         return true;
     }
+
 
     public ArrayList<User> loadUsers(){
         while(scanner.hasNextLine()){

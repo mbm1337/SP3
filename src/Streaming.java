@@ -71,15 +71,15 @@ public class Streaming {
 
     public void loginMenu(UserHandler userHandler) {
 
-            String userName = ui.getUserInput("Please enter your username:");
+            String username = ui.getUserInput("Please enter your username:");
             String password = ui.getUserInput("Please enter your password:");
-            if (userHandler.login(userName, password)) {
-                ui.displayMessage("Welcome " + userName);
+            if (userHandler.login(username, password)) {
+                ui.displayMessage("Welcome " + username);
             } else {
                 ui.displayMessage("Sorry, the username or password is incorrect");
                 streamSetup();
             }
-        currentUser = new User(userName,password);
+        currentUser = new User(username,password);
     }
 
     public void createUserMenu (UserHandler userHandler) {
@@ -89,12 +89,10 @@ public class Streaming {
                 ui.displayMessage("Welcome " + userName);
             } else {
                 ui.displayMessage("Sorry, the username or password can not be used");
+                streamSetup();
             }
+
         currentUser = new User(userName,password);
     }
-
-
-
-
 
 }
