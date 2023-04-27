@@ -37,6 +37,15 @@ public class User {
             ui.displayMessage(s);
         }
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "watchedList=" + watchedList +
+                ", savedList=" + savedList +
+                '}';
+    }
+
     public ArrayList<String> getWatchedList() {
         return watchedList;
     }

@@ -40,6 +40,7 @@ public class Streaming {
         if (s1.equalsIgnoreCase("Y")) {
             userHandler.saveUsers();
             loginMenu(userHandler);
+
         } else if(s1.equalsIgnoreCase("N")){
             createUserMenu(userHandler);
             userHandler.saveUsers();
@@ -63,8 +64,8 @@ public class Streaming {
                 mainMenu();
             break;
             case "3":
-                io.saveSavedList("src/Files/savedList.csv",currentUser,movies,series);
-                io.saveWatchedList("src/Files/watchedList.csv",currentUser,movies,series);
+                io.saveSavedList("src/Files/savedList.csv",currentUser);
+                io.saveWatchedList("src/Files/watchedList.csv",currentUser);
                 ui.displayMessage("Goodbye!");
                 break;
             default:
@@ -80,6 +81,8 @@ public class Streaming {
             if (userHandler.login(username, password)) {
                 ui.displayMessage("Welcome " + username);
                 currentUser = new User(username,password);
+                currentUser.savedList = io.loadList("src/Files/savedList.csv",currentUser);
+                currentUser.watchedList = io.loadList("src/Files/watchedList.csv",currentUser);
                 mainMenu();
             } else {
                 ui.displayMessage("Sorry, the username or password is incorrect");

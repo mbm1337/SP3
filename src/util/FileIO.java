@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import Content.*;
 
 
 public class  FileIO {
@@ -58,7 +57,7 @@ public class  FileIO {
         return arr;
 
     }
-    public void saveWatchedList(String path, User u, Movies movies, Series series) {
+    public void saveWatchedList(String path, User u) {
         FileWriter writer = null;
         try {
             writer = new FileWriter(path);
@@ -72,9 +71,11 @@ public class  FileIO {
         }
     }
 
-    public void saveSavedList(String path, User u, Movies movies, Series series) {
+    public void saveSavedList(String path, User u) {
         FileWriter writer = null;
         try {
+            writer.
+
             writer = new FileWriter(path);
             writer.write("username; savedList; \n");
             writer.write(u.getName() + ";" + u.getSavedList().toString() + ";" + "\n");
@@ -85,6 +86,35 @@ public class  FileIO {
 
         }
 
+    }
+
+    public ArrayList<String> loadList(String path, User user) {
+
+        file = new File(path);
+        ArrayList<String> listData = new ArrayList<>();
+
+        try {
+            scan = new Scanner(file);
+
+            scan.nextLine(); // ignore header in csv
+
+            while (scan.hasNextLine()) {
+                String line = scan.nextLine();
+                String[] line2 =  line.split(";");
+
+                if (line2[0].equalsIgnoreCase(user.getName())) {
+                    String[] movies = line2[1].split(",");
+                    for (String s : movies) {
+                        listData.add(s);
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("The file was not found");
+
+        }
+
+        return listData;
     }
 
 }
