@@ -38,13 +38,6 @@ public class User {
         }
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "watchedList=" + watchedList +
-                ", savedList=" + savedList +
-                '}';
-    }
 
     public ArrayList<String> getWatchedList() {
         return watchedList;

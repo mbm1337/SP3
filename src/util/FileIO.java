@@ -74,18 +74,13 @@ public class  FileIO {
     public void saveSavedList(String path, User u) {
         FileWriter writer = null;
         try {
-            writer.
-
             writer = new FileWriter(path);
             writer.write("username; savedList; \n");
-            writer.write(u.getName() + ";" + u.getSavedList().toString() + ";" + "\n");
+                writer.write(u.getName() + ";" + u.getSavedList().toString() + ";" + "\n");
             writer.close();
 
         } catch (IOException e) {
-
-
         }
-
     }
 
     public ArrayList<String> loadList(String path, User user) {

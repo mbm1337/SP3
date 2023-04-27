@@ -7,6 +7,7 @@ import Util.User;
 import Util.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Streaming {
@@ -19,6 +20,8 @@ public class Streaming {
     UserHandler userHandler;
 
     ArrayList <User> users = new ArrayList<>();
+    ArrayList<String> usersSavedList = new ArrayList<>();
+    ArrayList<String> usersWatchedList = new ArrayList<>();
 
 
     public Streaming() {
@@ -84,6 +87,7 @@ public class Streaming {
                 currentUser.savedList = io.loadList("src/Files/savedList.csv",currentUser);
                 currentUser.watchedList = io.loadList("src/Files/watchedList.csv",currentUser);
                 mainMenu();
+
             } else {
                 ui.displayMessage("Sorry, the username or password is incorrect");
                 streamSetup();
@@ -101,8 +105,6 @@ public class Streaming {
                 ui.displayMessage("Sorry, the username or password can not be used");
                 streamSetup();
             }
-
-
     }
 
 }
