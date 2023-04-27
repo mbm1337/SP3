@@ -47,7 +47,13 @@ public class Movies {
 
     public void movieMenu(User user) {
         currentUser = user;
-        String inputMovies = ui.getUserInput("Please choose between following options;\n" + "1. Search for a specific movie\n" + "2. Search for a genre and receive all movies in this category\n" + "3. Review your list of watched movies and series\n" + "4. Review your list of saved movies and series");
+        String inputMovies = ui.getUserInput(
+                "Please choose between following options;\n" +
+                        "1. Search for a specific movie\n" +
+                        "2. Search for a genre and receive all movies in this category\n" +
+                        "3. Search by decade and receive all movies in a period \n" +
+                        "4. Review your list of watched movies and series\n" +
+                        "5. Review your list of saved movies and series");
         switch (inputMovies) {
             case "1":
                 movieSearch();
@@ -56,11 +62,13 @@ public class Movies {
                 genreSearch();
                 break;
             case "3":
-                currentUser.watchedList();
+                searchByYear();
                 break;
             case "4":
-                currentUser.savedList();
+                currentUser.watchedList();
                 break;
+            case "5":
+                currentUser.savedList();
             default:
                 ui.displayMessage("This is not an option");
                 movieMenu(currentUser);
@@ -116,6 +124,36 @@ public class Movies {
             }
         }
         movieSearch();
+    }
+
+    public void searchByYear() {
+        ArrayList<String> yearSeach = new ArrayList<>();
+        int input = Integer.parseInt(ui.getUserInput("Please type the desired decade:"));
+        String[] moviesData = io.readMoviesData("src/Files/Movies.csv", 100);
+
+        for (String s : moviesData) {
+            String[] line = s.split(";");
+            this.title = line[0].trim();
+            this.year = Integer.parseInt(line[1].trim());
+            this.genre = line[2].split("\\.");
+            this.rating = Float.parseFloat(line[3].trim());
+
+            if(year >= input && year < (input+10)){
+                yearSeach.add(title);
+            }
+        }
+        if (yearSeach.size()>0){
+            for (String s : yearSeach){
+                ui.displayMessage(s);
+            }
+            movieSearch();
+        } else{
+            ui.displayMessage("Sorry, we have no movies from this decade");
+            searchByYear();
+        }
+
+
+
     }
 
 
