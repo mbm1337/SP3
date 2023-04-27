@@ -7,7 +7,7 @@ import Util.User;
 import Util.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 
 public class Streaming {
@@ -15,16 +15,16 @@ public class Streaming {
     private TextUI ui;
     private FileIO io;
     private User currentUser;
-    Movies movies = new Movies();
-    Series series = new Series();
+    Movies movies;
+    Series series;
     UserHandler userHandler;
-
-    ArrayList <User> users = new ArrayList<>();
-    ArrayList<String> usersSavedList = new ArrayList<>();
-    ArrayList<String> usersWatchedList = new ArrayList<>();
+    ArrayList <User> users;
 
 
     public Streaming() {
+        this.series = new Series();
+        this.movies = new Movies();
+        this.users = new ArrayList<>();
 
     }
 
