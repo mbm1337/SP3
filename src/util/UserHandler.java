@@ -44,19 +44,8 @@ public class UserHandler {
                 User user = new User(username, password);
                 users.add(user);
                 return true;
-            }else{
-                return false;
             }
         }
-        /*
-
-        for(User user: users){
-            if(user.getName().equals(username) && user.getPassword().equals(password) )
-                return true;
-        }
-        return false;
-
-         */
         return false;
     }
 

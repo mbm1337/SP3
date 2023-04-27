@@ -7,7 +7,6 @@ public class Main {
         Streaming streaming = new Streaming();
 
         streaming.streamSetup();
-        streaming.mainMenu();
 
 
 

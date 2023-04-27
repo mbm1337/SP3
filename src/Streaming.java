@@ -36,15 +36,19 @@ public class Streaming {
             System.exit(0);
         }
 
-        if (ui.getUserInput("Already user? Y/N").equalsIgnoreCase("Y")) {
+        String s1 = ui.getUserInput("Already user? Y/N");
+        if (s1.equalsIgnoreCase("Y")) {
             userHandler.saveUsers();
             loginMenu(userHandler);
-
-        } else {
+        } else if(s1.equalsIgnoreCase("N")){
             createUserMenu(userHandler);
             userHandler.saveUsers();
-
+        } else {
+            ui.displayMessage("Not an option, please try again");
+            userHandler.saveUsers();
+            streamSetup();
         }
+
     }
 
     public void mainMenu() {
@@ -75,11 +79,12 @@ public class Streaming {
             String password = ui.getUserInput("Please enter your password:");
             if (userHandler.login(username, password)) {
                 ui.displayMessage("Welcome " + username);
+                currentUser = new User(username,password);
+                mainMenu();
             } else {
                 ui.displayMessage("Sorry, the username or password is incorrect");
                 streamSetup();
             }
-        currentUser = new User(username,password);
     }
 
     public void createUserMenu (UserHandler userHandler) {
@@ -87,12 +92,14 @@ public class Streaming {
             String password = ui.getUserInput("Please enter a password:");
             if (userHandler.createUser(userName, password)) {
                 ui.displayMessage("Welcome " + userName);
+                currentUser = new User(userName,password);
+                mainMenu();
             } else {
                 ui.displayMessage("Sorry, the username or password can not be used");
                 streamSetup();
             }
 
-        currentUser = new User(userName,password);
+
     }
 
 }
