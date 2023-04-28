@@ -26,7 +26,6 @@ public class UserHandler {
             }
             filewriter = new FileWriter(file);
 
-
         } catch (FileNotFoundException e){
             System.out.println("File not found");
         } catch (IOException e){
@@ -68,7 +67,6 @@ public class UserHandler {
         }
         return users;
     }
-
 
     public void saveUsers() {
         try{

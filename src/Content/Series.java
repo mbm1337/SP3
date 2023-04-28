@@ -7,11 +7,11 @@ import Util.User;
 public class Series{
     private String title;
     private String[] genre;
+
     private String[] year;
     private float rating;
     private int seasons;
     private int episodes;
-
     User currentUser;
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
@@ -117,6 +117,4 @@ public class Series{
         }
         seriesSearch();
     }
-
-
 }

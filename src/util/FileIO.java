@@ -62,7 +62,7 @@ public class  FileIO {
         try {
             writer = new FileWriter(path);
             writer.write("username; watchedList; \n");
-            writer.write(u.getName() + ";" + u.getWatchedList().toString() + ";" + "\n");
+            writer.write(u.getName() + ";" + u.getWatchedList().toString().replace("[","").replace("]","") + ";" + "\n");
             writer.close();
 
 
@@ -76,7 +76,7 @@ public class  FileIO {
         try {
             writer = new FileWriter(path);
             writer.write("username; savedList; \n");
-                writer.write(u.getName() + ";" + u.getSavedList().toString() + ";" + "\n");
+                writer.write(u.getName() + ";" + u.getSavedList().toString().replace("[","").replace("]","") + ";" + "\n");
             writer.close();
 
         } catch (IOException e) {

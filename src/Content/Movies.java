@@ -66,7 +66,6 @@ public class Movies {
             case "5":
                 currentUser.savedList();
             default:
-                ui.displayMessage("This is not an option");
                 movieMenu(currentUser);
         }
     }
