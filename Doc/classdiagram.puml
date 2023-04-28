@@ -10,59 +10,108 @@ class Streaming{
 -ArrayList<User> users
 -TextUI ui
 -FileIO io
-- User currentUser
+-User currentUser
+-Movies movies
+-Series series
+-UserHandler userHandler
+-ArrayList<User> users
++void createUserMenu(UserHandler)
++void loginMenu(UserHandler)
++void mainMenu()
++void streamSetup()
 
 }
 
 class Movies{
-+ String[] Genre
-+ int minYear
-+ int maxYear
-+ int minRating
+-String[] Genre
+-User currentUser
+-FileIO io
+-float rating
+-String title
+-TextUI ui
+-int year
++void genreSearch()
++void movieMenu(User)
++void movieSearch()
++void searchByYear()
+
 }
 
 class Series{
-+ String[] Genre
-+ int minYear
-+ int maxYear
-+ int minRating
+-String[] Genre
+-User currentUser
+-FileIO io
+-float rating
+-String title
+-TextUI ui
+-String[] year
+-int episodes
+-int seasons
+
++void genreSearch()
++void seriesMenu(User)
++void seriesSearch()
 }
 
 package "util"{
 class FileIO{
 -Scanner scan
 -File file
-+readUserData(String path)
++ArrayList<String> loadList(String, User)
++String[] readMoviesData(String,int)
++ArrayList<String> readUserData(String)
 +void saveUserData(String path, ArrayList<User> users)
-+readContent(String path)
-
++void saveSavedList(String, User)
++void savedWatchedList(String, User)
 }
 
 
 class TextUI{
 -Scanner scan
-+ String  getInput(String msg)
++ String  getUserInput(String msg)
 + void displayMessage(String msg)
 
 }
 
+class UserHandler{
+-File file
+-FileWriter fileWriter
+-FileIO io
+-Scanner scanner
+-ArrayList<User> users
++boolean createUser(String,String)
++ArrayList<User> loadUser()
++boolean login(String,String)
++void saveUsers()
+
+}
+
+
 }
 
 class User{
-+ int userID
-+ String username
-+ String password
-
+- String username
+- String password
+- ArrayList<String> savedList
+- TextUI ui
+- ArrayList<String> watchedList
++ String getName()
++ String getPassword()
++ ArrayList<String> getSavedList()
++ ArrayList<String> getWatchedList()
++ void savedList()
++ void watchedList()
 }
 
 
 Main *-- Streaming
-Streaming *-- Content
-Content <|-- Series
-Content <|-- Movies
+
+Streaming*-- Series
+Streaming*-- Movies
 
 Streaming *-- TextUI
 Streaming *-- FileIO
+Streaming *-- UserHandler
 
 Streaming *-- User
 
