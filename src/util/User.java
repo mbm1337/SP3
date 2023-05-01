@@ -1,8 +1,9 @@
-package Util;
+package util;
 
 import java.util.ArrayList;
 
 public class User {
+    int ID;
     String name;
     String password;
 
