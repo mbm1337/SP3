@@ -12,7 +12,6 @@ public class Series{
     private int episodes;
     User currentUser;
     TextUI ui = new TextUI();
-    FileIO io = new FileIO();
 
     public Series(){
 
@@ -56,10 +55,10 @@ public class Series{
                 genreSearch();
                 break;
             case "3":
-                currentUser.watchedList();
+                currentUser.displayWatchedList();
                 break;
             case "4":
-                currentUser.savedList();
+                currentUser.displaySavedList();
                 break;
             default:
                 ui.displayMessage("This is not an option");

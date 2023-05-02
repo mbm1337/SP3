@@ -1,52 +1,57 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
-    int ID;
-    String name;
+    int id;
+    String username;
     String password;
-
     TextUI ui = new TextUI();
 
-    public ArrayList<String> watchedList = new ArrayList<>();
+    public List<WatchedMovies> watchedMovies;
 
-    public ArrayList<String> savedList = new ArrayList<>();
+    public ArrayList<WatchedSeries> watchedSeries;
 
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(int id, String username, String password) {
+        this.id = id;
+        this.username = username;
         this.password = password;
+        this.watchedSeries = new ArrayList<>();
+        this.watchedMovies = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
-
+    public String getUsername() {return username;}
     public String getPassword() {
         return password;
     }
 
-    public void watchedList() {
-        for (String s : watchedList) {
+    public void displayWatchedList() {
+        for (String s : ) {
             ui.displayMessage(s);
         }
     }
 
-    public void savedList() {
-        for (String s : savedList) {
+    public void displaySavedList() {
+        for (String s : ) {
             ui.displayMessage(s);
         }
     }
-
 
     public ArrayList<String> getWatchedList() {
-        return watchedList;
+        return ;
     }
 
     public ArrayList<String> getSavedList() {
-        return savedList;
+        return ;
     }
 
+    public void setWatchedList(ArrayList<String> watchedList) {
+         = watchedList;
+    }
 
+    public void setSavedList(ArrayList<String> savedList) {
+         = savedList;
+    }
 }
