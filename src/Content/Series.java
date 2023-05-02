@@ -1,8 +1,6 @@
 package Content;
 
-import Util.FileIO;
-import Util.TextUI;
-import Util.User;
+import util.*;
 
 public class Series{
     private String title;

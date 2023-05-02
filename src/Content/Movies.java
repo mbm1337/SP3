@@ -1,8 +1,6 @@
 package Content;
 
-import Util.FileIO;
-import Util.TextUI;
-import Util.User;
+import util.*;
 
 import java.util.ArrayList;
 

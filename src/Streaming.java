@@ -1,14 +1,7 @@
-import Content.Movies;
-import Content.Series;
-import Util.FileIO;
-import Util.TextUI;
-import Util.User;
-
-import Util.*;
+import Content.*;
+import util.*;
 
 import java.util.ArrayList;
-
-
 
 public class Streaming {
 
