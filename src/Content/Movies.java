@@ -22,37 +22,46 @@ public class Movies {
         this.rating = rating;
     }
 
-    public void movieSearch() {
 
-        String input = ui.getUserInput("Please type the desired movie:");
 
-        for (String s : ) {
-            String[] line = s.split(";");
-            this.Movies_ID = Integer.parseInt(line[0]);
-            this.title = line[1].trim();
-            this.year = Integer.parseInt(line[2].trim());
-            this.genre = line[3].split("\\.");
-            this.rating = Float.parseFloat(line[4].trim());
-            if (input.equalsIgnoreCase(title)) {
-                String input2 = ui.getUserInput("Choose between: 1/2\n" +
-                        "1. Watch the chosen movie\n" +
-                        "2. Save movie to your saved list");
-                if (input2.equalsIgnoreCase("1")) {
-                    ui.displayMessage("You are now watching " + title);
-                    currentUser.watchedList.add(title);
-                    ui.displayMessage("\nThank you for watching. Do you want to watch more?");
 
-                } else if (input2.equalsIgnoreCase("2")) {
-                    currentUser.savedList.add(title);
-                    ui.displayMessage("The movie was saved on your saved list.");
-
-                } else {
-                    ui.displayMessage("This is not an option");
-                    movieSearch();
-                }
-            }
-        }
+    public int getMovies_ID() {
+        return Movies_ID;
     }
 
+    public void setMovies_ID(int movies_ID) {
+        Movies_ID = movies_ID;
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<String> getGenre() {
+        return genre;
+    }
+
+    public void setGenre(List<String> genre) {
+        this.genre = genre;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 }
