@@ -15,7 +15,12 @@ public class Streaming {
         users = dbConnector.loadUsers();
         movies = dbConnector.loadMovies();
         series = dbConnector.loadSeries();
-        dbConnector.loadLists();
+       dbConnector.loadWatchedSeries();
+        dbConnector.loadWatchedMovies();
+       dbConnector.loadSavedSeries();
+        dbConnector.loadSavedMovies();
+        System.out.println("Almost there..");
+
     }
 
     public void streamSetup() {

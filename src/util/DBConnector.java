@@ -23,48 +23,6 @@ public class DBConnector {
 
     char quotes = '"';
 
-   /* public void createUser(String Username, String Password) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        try {
-            //STEP 1: Register JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
-            //STEP 2: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            //STEP 3: Execute a query
-            System.out.println("Creating statement...");
-            String sql1 = "insert into users (username, password) values (" + quotes + Username + quotes + "," + quotes + Password + quotes + ");";
-            stmt = conn.prepareStatement(sql1);
-            stmt.execute(sql1);
-
-            //STEP 5: Clean-up environment
-            stmt.close();
-            conn.close();
-        } catch (SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
-            //finally block used to close resources
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            }// nothing we can do
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }//end finally try
-        }//end try
-    }
-
-    */
-
     public ArrayList<User> loadUsers() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -253,28 +211,36 @@ public class DBConnector {
         return series;
     }
 
-    public void save(ArrayList<User> tempusers) {
+    public ArrayList<Movies> loadWatchedMovies(){
+
         Connection conn = null;
         PreparedStatement stmt = null;
-        try {
-            //STEP 1: Register JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
-            //STEP 2: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            //STEP 3: Execute a query
-            System.out.println("Saving Users");
-            for(User user : tempusers) {
-                try {
-                    //String sql1 = "insert into users (User_id, username, password) values (?, ?, ?)";
-                    String sql1 = "insert into users (User_id, username, password) values (" + quotes + user.getId() + quotes + "," + quotes + user.getUsername() + quotes + "," + quotes + user.getPassword() + quotes + ");";
-                    stmt = conn.prepareStatement(sql1);
-                    // statement.setInt(1, user.getId());
-                    stmt.executeUpdate(sql1);
-                } catch (Exception e) {}
-            }
+            try {
+                //STEP 1: Register JDBC driver
+                Class.forName("com.mysql.jdbc.Driver");
 
+                //STEP 2: Open a connection
+                conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+                //STEP 3: Execute a query
+                String sql = "SELECT * FROM streaming.watchedmovies ORDER BY USER_ID;";
+                stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery(sql);
+                //STEP 4: Extract data from result set
+                while (rs.next()) {
+                    for (User user : users) {
+                        if (rs.getInt("user_ID")==user.getId()) {
+                            for (Movies movie : movies) {
+                                if (rs.getInt("Movies_ID") == (movie.getMovies_ID())) {
+                                    user.addToWatchedMovies(movie);
+                                }
+                            }
+                        }
+                    }
+
+            }
             //STEP 5: Clean-up environment
+            rs.close();
             stmt.close();
             conn.close();
         } catch (SQLException se) {
@@ -297,9 +263,174 @@ public class DBConnector {
                 se.printStackTrace();
             }//end finally try
         }//end try
+
+        return movies;
+    }
+    public ArrayList<Movies> loadSavedMovies(){
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            //STEP 1: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 2: Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //STEP 3: Execute a query
+            String sql = "SELECT * FROM streaming.savedmovies ORDER BY USER_ID;";
+            stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                for(User user: users) {
+                    if(rs.getString("user_ID").equals(user.getId())){
+                        for(Movies movies : movies){
+                            if(rs.getString("Series_ID").equals(movies.getMovies_ID())){
+                                user.addToSavedMovies(movies);
+                            }
+                        }
+                    }
+                }
+            }
+            //STEP 5: Clean-up environment
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+
+        return movies;
+    }
+    public ArrayList<Series> loadWatchedSeries(){
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            //STEP 1: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 2: Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //STEP 3: Execute a query
+            String sql = "SELECT * FROM streaming.watchedseries ORDER BY USER_ID;";
+            stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            //STEP 4: Extract data from result set
+            while (rs.next()) {
+                for (User user : users) {
+                    if (rs.getInt("user_ID")==user.getId()) {
+                        for (Series series : series) {
+                            if (rs.getInt("Series_ID") == (series.getId())) {
+                                user.addToWatchedSeries(series);
+                            }
+                        }
+                    }
+                }
+
+            }
+            //STEP 5: Clean-up environment
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+
+        return series;
+    }
+    public ArrayList<Series> loadSavedSeries(){
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            //STEP 1: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 2: Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //STEP 3: Execute a query
+            String sql = "SELECT * FROM streaming.savedseries ORDER BY USER_ID;";
+            stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            //STEP 4: Extract data from result set
+            while (rs.next()) {
+                for(User user: users) {
+                    if(rs.getString("user_ID").equals(user.getId())){
+                        for(Series series : series){
+                            if(rs.getString("Series_ID").equals(series.getId())){
+                                user.addToSavedSeries(series);
+                            }
+                        }
+                    }
+                }
+            }
+            //STEP 5: Clean-up environment
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+
+        return series;
     }
 
-    public void loadLists() {
+    public ArrayList<User> loadLists() {
 
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -312,7 +443,7 @@ public class DBConnector {
 
             //STEP 3: Execute a query
             System.out.println("Almost there..");
-            String sql = "SELECT * FROM streaming.watchedmovies;";
+            String sql = "SELECT * FROM streaming.watchedmovies ORDER BY USER_ID;";
             stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 4: Extract data from result set
@@ -333,9 +464,9 @@ public class DBConnector {
             while (rs1.next()) {
                 for(User user: users) {
                     if(rs1.getString("user_ID").equals(user.getId())){
-                        for(Movies movie : movies){
-                            if(rs1.getString("Movies_ID").equals(movie.getMovies_ID())){
-                                user.addToSavedMovies(movie);
+                        for(Series series : series){
+                            if(rs1.getString("Series_ID").equals(series.getId())){
+                                user.addToWatchedSeries(series);
                             }
                         }
                     }
@@ -346,9 +477,9 @@ public class DBConnector {
             while (rs2.next()) {
                 for(User user: users) {
                     if(rs2.getString("user_ID").equals(user.getId())){
-                        for(Series series : series){
-                            if(rs2.getString("Series_ID").equals(series.getId())){
-                                user.addToWatchedSeries(series);
+                        for(Movies movies : movies){
+                            if(rs2.getString("Series_ID").equals(movies.getMovies_ID())){
+                                user.addToSavedMovies(movies);
                             }
                         }
                     }
@@ -395,6 +526,11 @@ public class DBConnector {
                 se.printStackTrace();
             }//end finally try
         }//end try
+        return users;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
     public void saveLists(ArrayList<User> users) {
@@ -411,7 +547,7 @@ public class DBConnector {
                 for (Movies s : user.getWatchedMovies()) {
                     try {
                         //String sql1 = "insert into users (User_id, username, password) values (?, ?, ?)";
-                        String sql1 = "INSERT INTO watchedmovies (User_id, Movies_ID) values (" + quotes + user.getId() + quotes + "," + quotes + s.getMovies_ID() + quotes + ");";
+                        String sql1 = "INSERT INTO watchedmovies (User_id, movie_ID) values (" + quotes + user.getId() + quotes + "," + quotes + s.getMovies_ID() + quotes + ");";
                         stmt = conn.prepareStatement(sql1);
                         // statement.setInt(1, user.getId());
                         stmt.executeUpdate(sql1);
@@ -444,6 +580,51 @@ public class DBConnector {
                         stmt.executeUpdate(sql1);
                     } catch (Exception e) {}
                 }
+            }
+
+            //STEP 5: Clean-up environment
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+    }
+    public void save(ArrayList<User> tempusers) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            //STEP 1: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            //STEP 2: Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            //STEP 3: Execute a query
+            System.out.println("Saving Users");
+            for(User user : tempusers) {
+                try {
+                    //String sql1 = "insert into users (User_id, username, password) values (?, ?, ?)";
+                    String sql1 = "insert into users (User_id, username, password) values (" + quotes + user.getId() + quotes + "," + quotes + user.getUsername() + quotes + "," + quotes + user.getPassword() + quotes + ");";
+                    stmt = conn.prepareStatement(sql1);
+                    // statement.setInt(1, user.getId());
+                    stmt.executeUpdate(sql1);
+                } catch (Exception e) {}
             }
 
             //STEP 5: Clean-up environment
